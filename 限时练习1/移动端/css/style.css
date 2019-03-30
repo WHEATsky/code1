@@ -1,0 +1,119 @@
+/*预定义*/
+html,body{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+ul,ol,li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+html,body{
+    height:100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+
+@media all and (max-width:320px) {
+    html {
+        font-size:12px;
+    }
+}
+@media all and (min-width:321px) and (max-width:375px) {
+    html {
+        font-size:14px;
+    }
+}
+@media all and (min-width:376px) {
+    html {
+        font-size:16px;
+    }
+}
+/* 主要内容 */
+header{
+    display: flex;
+    justify-content: space-between;
+    height: 6.96rem;
+    background-color: #ffffff;
+    align-items:center;
+    position: relative;
+    border-bottom: 1px solid #f3f3f3;
+}
+header>div:nth-of-type(1){
+    font-size: 35px;
+    line-height: 9.96rem;
+}
+header>div:nth-of-type(1)>i{
+    font-size: 30px;
+    background-color:#aed2f8;
+    vertical-align: middle;
+    border-radius: 7px;
+}
+header>div:nth-of-type(2)>i{
+    font-size: 30px;
+    position: absolute;
+    top: 27px;
+    left: 310px;
+}
+nav{
+    height: 5.625rem;
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+}
+nav>div{
+    display:flex;
+    flex-direction: column;
+    widows: 25%;
+    font-size: 15px;
+    text-align: center
+}
+nav>div>i{
+    font-size: 30px !important;
+}
+.blank{
+    height: 1.14rem;
+    background-color:#efeff4;
+}
+.yue{
+    display: flex;
+    flex-direction: column;
+    height: 6.25rem;  
+}
+.yue>.yue-top{
+    height: 50%;
+    display: flex;
+    justify-content:space-between;
+    font-size: 15px;
+    border-bottom:1px solid #f3f3f3;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.yue>.yue-down{
+    height: 50%;
+    display: flex;
+    justify-content:space-between;
+    font-size: 15px;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.yue>.yue-top>.red{
+    width:32px;
+    height: 20px;
+    background-color: red;
+    border-radius: 6px;
+}
+.footer{
+    height: 5rem;
+    display:flex;
+    background-color: #efeff4;
+}

@@ -1,0 +1,74 @@
+/*预定义样式工具*/
+html{
+	margin: 0;
+	padding: 0;
+}
+
+ul,li {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+}
+.fl {
+    float: left;
+}
+.fr {
+    float: right;
+}
+
+.flex {
+    display: flex;
+}
+
+.in-flex {
+    display: inline-flex;
+}
+.container {
+    width: 1116px;
+    margin:0 auto;
+}
+
+.clearfix:after {
+    content:" ";
+    display: block;
+    clear:both;
+}
+.clearfix:before {
+    *zoom:1;
+}
+.hide {
+	display: none !important; 
+}
+.mar-left-300 {
+    margin-left:300px;
+}
+
+.mar-left-400 {
+    margin-left:400px;
+}
+
+.mar-left-500 {
+    margin-left:500px;
+}
+
+.padd-top-10 {
+    padding-top:10px;
+}
+
+.abs {
+    position: absolute;
+}
+
+.rep {
+    position: relative;
+}
+
+.ps {
+    position: static;]
+}
+
+.pf {
+    position: fixed;
+}
