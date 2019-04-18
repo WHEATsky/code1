@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>苹果菜单</title>
+<style type="text/css">
+body {margin:0px;}
+#div1 {
+	text-align:center; 
+	position:absolute; 
+	bottom:0px;  
+	width:800px;
+	margin:0 auto;
+	
+}
+
+#div1 img {border:none;}
+
+</style>
+<script type="text/javascript" >
+	document.onmousemove = function(evt){
+		
+		var ev = evt || event;
+		var imgs = document.getElementsByTagName("img");
+		
+		for(var i=0; i<imgs.length; i++){
+			var distance = dis(evt, imgs[i]); //得到鼠标和图片中心的距离
+			
+			imgs[i].style.width = 250-Math.min(200,distance)+"px"; //图片宽度的范围是：50-250
+			
+		}
+	}
+	
+	function dis(evt, img){
+		//x,y代表图片的中心点位置
+		//alert(img.parentNode.parentNode.offsetLeft);
+		//alert(img.offsetLeft);
+		        // div距离页面左边的距离            +  图片距离父元素左边的距离+图片宽度的一半
+		var x = img.parentNode.parentNode.offsetLeft+img.offsetLeft+img.offsetWidth/2;
+		
+		var y = img.parentNode.parentNode.offsetTop+img.offsetTop+img.offsetHeight/2;
+		                         //鼠标离图片中心的x距离      鼠标离图片中心的y距离   
+		return Math.sqrt(Math.pow(evt.clientX-x,2)+ Math.pow((evt.clientY-y),2));
+	}
+
+</script>
+</head>
+
+<body>
+<div id="div1">
+	<a href="#"><img src="images/1.png" width="64"  /></a>
+	<a href="#"><img src="images/2.png" width="64" /></a>
+	<a href="#"><img src="images/3.png" width="64"  /></a>
+	<a href="#"><img src="images/4.png" width="64" /></a>
+	<a href="#"><img src="images/5.png" width="64" /></a>
+</div>
+</body>
+</html>
