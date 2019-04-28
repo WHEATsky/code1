@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>轮播图（面向对象）</title>
+    <style>
+        #box{
+            height: 330px;
+            width: 670px;
+            margin: 20px auto;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid black;
+        }   
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+</body>
+</html>
+<script>
+function fadeInOut(domObjIn,domObjOut,timeLong){
+	let timerSpace= 16;
+	let long = 1;
+	let step = long/(timeLong/timerSpace) 
+	
+	let opacity = 0;
+
+	let myTimer = setInterval(function(){
+		opacity +=step;
+		if(opacity>=1){
+			opacity = 1;
+			clearInterval(myTimer);
+		}
+		domObjIn.style.opacity = opacity;
+		domObjOut.style.opacity = 1-opacity;
+	},timerSpace);
+}
+function    $(id){
+    return document.getElementById(id);
+}
+function   Banner(boxDom,width,height,imgs,douText,aText,douIfcircle,douSize,douColor,douHighColor,douPosition,timeSpace){
+    this.boxDom=boxDom;
+    this.imgDoms=[];
+    this.width=width;
+    this.height=height;
+    this.imgs=imgs;
+    this.douText=douText;
+    this.aText=aText;
+    this.douIfcircle=douIfcircle;
+    this.douSize=douSize;
+    this.douColor=douColor;
+    this.douHighColor=douHighColor;
+    this.douPosition=douPosition;
+    this.timeSpace=timeSpace;
+    this.myTimer=null;
+    this.currOrd=0;
+    this.createUI();
+    this.autoplay();
+    this.addEvent();
+}
+Banner.prototype.createUI=function(){
+    for(let i in this.imgs){
+        let aDom=document.createElement("a");
+        aDom.href=this.aText[i];
+        let imgDom=document.createElement("img");
+        imgDom.src=this.imgs[i]
+        imgDom.style.cssText=`width:${this.width}px;
+        height:${this.height}px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;`;
+        if(i=="0"){
+            imgDom.style.opacity=1;
+        }
+        aDom.appendChild(imgDom)
+        this.boxDom.appendChild(aDom);
+        this.imgDoms.push(imgDom);
+    }
+    let ulDom=document.createElement("ul");
+    ulDom.style.cssText=`z-index: 3;
+        height: 100%;
+        width: 80px;
+        background-color: #222222;
+        position: absolute;
+        top: 0px;
+        margin: 0;
+        padding: 0;`;
+        switch(this.douPosition){
+            case "左":ulDom.style.left="0px"
+            case "右":ulDom.style.left="600px"
+        }
+        this.boxDom.appendChild(ulDom);
+    for(i=0;i<this.imgs.length;i++){
+        let liDom=document.createElement("li");
+        liDom.style.cssText=`list-style: none;
+            height:55px;
+            width: 80px;
+            text-align: center;
+            color: white;
+            background-color: ${this.douColor};
+            line-height: 55px;`;
+            liDom.innerHTML=this.douText[i];
+        if(i==0){
+            liDom.style.backgroundColor=this.douHighColor;
+        }
+        ulDom.appendChild(liDom);
+        }
+}
+Banner.prototype.autoplay=function(){
+    let liDom=this.boxDom.lastElementChild.children;
+    let aDom=document.getElementsByTagName("a")
+    if(this.myTimer!=null){
+        return;
+    }
+    this.myTimer=setInterval(()=>{
+        let outOrd =this.currOrd;
+        this.currOrd++;        
+        if(this.currOrd>this.imgs.length-1){
+            this.currOrd=0;
+        }
+        fadeInOut(this.imgDoms[this.currOrd],this.imgDoms[outOrd],1000);
+        this.imgDoms[this.currOrd].style.zIndex=3;
+        for(i=0;i<liDom.length;i++){
+            liDom[i].style.backgroundColor=this.douColor;
+        }
+        liDom[this.currOrd].style.backgroundColor=this.douHighColor;
+      
+
+    },this.timeSpace);
+
+}
+Banner.prototype.stopplay=function(){
+    clearInterval(this.myTimer);
+    this.myTimer=null;
+}
+Banner.prototype.goImg=function(ord){
+    let liDoms=this.boxDom.lastElementChild.children;
+    let outOrd=this.currOrd;
+    this.currOrd=ord;
+    fadeInOut(this.imgDoms[ord],this.imgDoms[outOrd],1000)
+    for(let i=0;i<liDoms.length;i++){
+        liDoms[i].style.backgroundColor=this.douColor;
+         // aDom[i].href=null;
+    }
+    liDoms[ord].style.backgroundColor=this.douHighColor;
+    this.imgDoms[Ord].style.zIndex=5;
+}
+Banner.prototype.addEvent=function(){
+    this.boxDom.onmouseenter=()=>{
+        this.stopplay();
+    }
+    this.boxDom.onmouseleave=()=>{
+        this.autoplay();
+    }
+    let liDom=this.boxDom.lastElementChild.children;
+    for(let i=0;i<liDom.length;i++){
+        liDom[i].onclick=()=>{
+            this.goImg(i);
+        }
+    }
+}
+
+
+
+
+
+
+
+window.onload = function(){
+    var b1=["http://www.sohu.com/a/197319084_720986","http://www.umei.cc/tupiandaquan/fengjingtupian/7792.htm","http://www.meituba.com/yijing/35160.html","https://baijiahao.baidu.com/s?id=1613139421279889325&wfr=spider&for=pc","http://www.gexing.com/shaitu/s/%E5%A4%A7%E6%B5%B7","https://www.sohu.com/a/211005979_100018465"]
+	let  p1=new Banner($("box"),670,330,['img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg','img/5.jpg','img/6.jpg'],["湖泊","高山","公路","夕阳","大海","森林"],b1,true,20,'#222222','#c43a3a','左',2000);
+
+
+
+}
+
+
+
+
+</script>

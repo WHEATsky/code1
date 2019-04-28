@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>轮播图</title>
+    <style>
+        html{
+            margin: 0;
+            padding: 0;
+        }
+        a{
+            text-decoration: none;
+        }
+        #box{
+            height: 330px;
+            width: 670px;
+            margin: 20px auto;
+            overflow: hidden;
+            position: relative;
+        }
+        #box img{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+        #box a:first-child img{
+            opacity: 1;
+        }
+        #box>ul{
+            z-index: 3;
+            height: 100%;
+            width: 80px;
+            background-color: #222222;
+            position: absolute;
+            top: 0px;
+            left: 600px;
+            margin: 0;
+            padding: 0;
+        }
+        #box>ul>li{
+            list-style: none;
+            height:55px;
+            width: 80px;
+            text-align: center;
+            color: white;
+            line-height: 55px;
+        }
+        #box>ul>li:first-child{
+            background-color: #c43a3a;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <a href="http://www.sohu.com/a/197319084_720986" target="_blank"><img src="img/1.jpg" alt=""></a>
+        <a href="http://www.umei.cc/tupiandaquan/fengjingtupian/7792.htm" target="_blank"><img src="img/2.jpg" alt=""></a>
+        <a href="http://www.meituba.com/yijing/35160.html" target="_blank"><img src="img/3.jpg" alt=""></a>
+        <a href="https://baijiahao.baidu.com/s?id=1613139421279889325&wfr=spider&for=pc" target="_blank"><img src="img/4.jpg" alt=""></a>
+        <a href="http://www.gexing.com/shaitu/s/%E5%A4%A7%E6%B5%B7" target="_blank"><img src="img/5.jpg" alt=""></a>
+        <a href="https://www.sohu.com/a/211005979_100018465" target="_blank"><img src="img/6.jpg" alt=""></a>
+        <ul id="ulbox">
+            <li>湖泊</li>
+            <li>高山</li>
+            <li>公路</li>
+            <li>夕阳</li>
+            <li>大海</li>
+            <li>森林</li>
+        </ul>
+    </div>
+</body>
+</html>
+<script>
+    let inOrder=0;
+    var myTimer=null;
+function $(id){
+    return document.getElementById(id)
+}
+function fadeInOut(domObjIn,domObjOut,timeLong){
+	let timerSpace= 16;
+	let long = 1;
+	let step = long/(timeLong/timerSpace) 
+	
+	let opacity = 0;
+
+	let myTimer = setInterval(function(){
+		opacity +=step;
+		if(opacity>=1){
+			opacity = 1;
+			clearInterval(myTimer);
+		}
+		domObjIn.style.opacity = opacity;
+		domObjOut.style.opacity = 1-opacity;
+	},timerSpace);
+}
+function autoPlay(){
+    let imgDom=document.getElementsByTagName("img");
+    let liDom=document.getElementsByTagName("li");
+     myTimer=setInterval(function(){
+        let outOrder=inOrder;
+        inOrder++;
+        if(inOrder>=6){
+            inOrder=0;
+        }
+        fadeInOut(imgDom[inOrder],imgDom[outOrder],2000)
+        imgDom[inOrder].style.zIndex=3;
+        for(let i=0;i<liDom.length;i++){
+            liDom[i].style.backgroundColor="#222222"
+        }
+        liDom[inOrder].style.backgroundColor="#c43a3a"
+
+
+    },4000)
+}
+function jumpImg(ord){
+    let imgDom=document.getElementsByTagName("img");
+    let choseDom=$("ulbox").children
+    let outOrder=inOrder; 
+        inOrder=ord;   
+        fadeInOut(imgDom[ord],imgDom[outOrder],1000)
+        for(i=0;i<choseDom.length;i++){
+            choseDom[i].style.backgroundColor="#222222"
+        }
+        choseDom[ord].style.backgroundColor="#c43a3a"
+        imgDom[ord].style.zIndex=3;
+}
+window.onload=function(){
+    autoPlay()
+    $("box").onmouseenter=function(){
+        clearInterval(myTimer);
+        myTimer=null;
+    }
+    $("box").onmouseleave=function(){
+       autoPlay();
+    }
+    let ulDoms=$("ulbox").children;
+    for(let i=0;i<ulDoms.length;i++){
+        ulDoms[i].onclick=function(){
+            jumpImg(i)
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+</script>
